@@ -24,6 +24,9 @@ public class Controller {
         database.sortedOptionsForCoach();
     }
 
+    public void sortedOptionsForAccountant(){
+        database.sortedOptionsForAccountant();
+    }
     public void nameComparator(){
         database.NameComparator();
     }

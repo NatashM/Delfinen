@@ -21,36 +21,24 @@ public class Database {
     public Database() {
         try {
             this.members = filehandler.loadAllData();
+            splitMembers();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public void splitMembers() {
+        for (Member member : members) {
+            if (member.getAge() < 18) {
+                junior.add(member);
+            } else {
+                senior.add(member);
+            }
+        }
+    }
+
     public void addMember(String name, int age, String birthday, String address, boolean isActive, String grade, String swimType,String trainingTime) {
         Member newMember = new Member(name, age, birthday, address, isActive, grade, swimType,trainingTime);
-        try {
-            members.add(newMember);
-            filehandler.saveMembers(members, file);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if( age <= 18){
-            try{
-                junior.add(newMember);
-                filehandler.saveMembers(junior,new File("juniorMembers.csv"));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else{
-            try{
-                senior.add(newMember);
-                filehandler.saveMembers(senior,new File("seniorMembers.csv"));
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
         try{
             members.add(newMember);
             filehandler.saveMembers(members, file);
@@ -136,6 +124,10 @@ public class Database {
 
        System.out.println(member);
     }
+
+
+
+
 
     public void NameComparator() {
         NameComparator comparison = new NameComparator();
@@ -284,23 +276,48 @@ public class Database {
         }
     }
 
-    public void trainingTimeForTopFive(){
-        System.out.println("Top 5 swimmers");
-        for (Member member : members) {
-            if (member instanceof CompetitorMember) {
-                CompetitorMember competitorMember = (CompetitorMember) member;
-                System.out.println("Swimmer: " + competitorMember.getName());
-                Result bestResult = competitorMember.getBestTrainingResult();
-                if (bestResult != null) {
-                    System.out.println("Best Training Result: " +
-                            bestResult.getTime + " seconds on " + bestResult.getDate());
-                } else {
-                    System.out.println("No training results available.");
-                }
-                System.out.println();
+
+    public void trainingTimeForTopFiveSenior() {
+        System.out.println("Top 5 swimmers on the senior team");
+
+        // Sorting senior team members by training time
+        senior.sort(new TrainingTimeComparator());
+
+        // Top 5 swimmers
+        for (int i = 0; i < Math.min(5, senior.size()); i++) {
+            Member member = senior.get(i);
+            System.out.println("Swimmer: " + member.getName());
+            String trainingTime = member.getTrainingTime();
+            if (trainingTime != null && !trainingTime.isEmpty()) {
+                System.out.println("Best Training Time: " + trainingTime + " seconds");
+            } else {
+                System.out.println("No training results available.");
             }
+            System.out.println();
         }
     }
+
+    public void trainingTimeForTopFiveJunior() {
+        System.out.println("Top 5 swimmers on the junior team");
+
+        // sorting junior team members by training time
+        junior.sort(new TrainingTimeComparator());
+
+        // Top 5 swimmers
+        for (int i = 0; i < Math.min(5, junior.size()); i++) {
+            Member member = junior.get(i);
+            System.out.println("Swimmer: " + member.getName());
+            String trainingTime = member.getTrainingTime();
+            if (trainingTime != null && !trainingTime.isEmpty()) {
+                System.out.println("Best Training Time: " + trainingTime + " seconds");
+            } else {
+                System.out.println("No training results available.");
+            }
+            System.out.println();
+        }
+    }
+
+
 
     public void displayAllTrainingTimes() {
         for (Member member : members) {
@@ -318,6 +335,49 @@ public class Database {
             }
         }
     }
+
+    public double MembershipFee(Member member) {
+        int age = member.getAge();
+        boolean isActive = member.getIsActive();
+        double base = 0;
+
+        if (isActive) {
+            if (age < 18) {
+                base = 1000;
+            } else if (age >= 18 && age <= 60) {
+                base = 1600;
+            } else if (age > 60) {
+                base = (1600 / 4.0) * 3;
+            }
+        } else {
+            base = 500;
+        }
+
+        return base;
+    }
+
+    public void MemberFee() {
+        double totalFees = 0;
+
+        for (Member member : members) {
+            double fee = MembershipFee(member);
+            totalFees += fee;
+
+            System.out.println("Member: " + member.getName() + ", Age: " + member.getAge()  +", Member states : " + member.getIsActive() +
+                     ", Membership Fee: " + fee + " " + "kr.");
+        }
+
+
+        System.out.println("\n Expected monthly turnover: " + totalFees);
+    }
+
+
+
+
+
+
+
+
     public void sortedOptionsForCoach() {
         int categorized = scanner.nextInt();
         scanner.nextLine();
@@ -344,10 +404,10 @@ public class Database {
             case 7:
                 trainingTimeForEachSwimmer();
                 break;
-            case 8:
-                handleBestTrainingResult();
+            case 8: trainingTimeForTopFiveJunior();
                 break;
-
+            case 9: trainingTimeForTopFiveSenior();
+                break;
             default:
                 System.out.println("Unable to understand your command.");
         }
@@ -372,4 +432,15 @@ public class Database {
             default -> System.out.println("Unable to understand your command");
         }
     }
-}
+
+    public void sortedOptionsForAccountant() {
+        int categorized = scanner.nextInt();
+        scanner.nextLine();
+        switch (categorized) {
+            case 1:
+                MemberFee();
+                break;
+            case 2:
+                break;
+        }
+    }}

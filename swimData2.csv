@@ -1,8 +1,12 @@
 Name;Age;Birthday;Address;Activity type;Grade;Competition status;Training time;
-Natasha;18;070805;Copenhagen;true;Senior;non-competitor;90
-Azra;15;270808;Manhattan;false;Junior;competitor-swimmer;02:60
-John;20;200803;London;True;Senior;Competitor-swimmer;03:30
-Iman;13;020210;Johannesburg;False;Junior;non-competitor;04:23
-Marcel;16;140307;Washington Dc;true;Junior;non-competitor;04:30
-Cameron;19;270904;Alabama;true;senior;Competitor-swimmer;95
-Delayne;18;121204;Alanya;true;senior;Competitor-swimmer;89
+Natasha;18;070805;Copenhagen;true;Senior;non-competitor;02:50
+Azra;15;270808;Manhattan;false;Junior;competitor-swimmer;01:60
+John;20;200803;London;True;Senior;Competitor-swimmer;01:30
+Iman;13;020210;Johannesburg;False;Junior;non-competitor;02:53
+Marcel;16;140307;Washington Dc;true;Junior;non-competitor;03:30
+Cameron;19;270904;Alabama;true;senior;Competitor-swimmer;02:09
+Delayne;18;121204;Alanya;true;senior;Competitor-swimmer;02:04
+Rhysand;16;120707;Dortmund;True;junior;Competitor-swimmer;01:30
+Autumn;20;020203;Minneapolis;false;Senior;Competitor-swimmer;01:43
+Sara;14;030409;Berlin;true;junior;Competitor-swimmer;03:42
+Will;16;030407;London;true;junior;Competitor-swimmer;02:42

@@ -48,14 +48,21 @@ public class UserInterface {
                         System.out.println("5. Search for a swimmer");
                         System.out.println("6. Training times for all swimmers");
                         System.out.println("7. Training time for each swimmer");
+                        System.out.println("8. Top 5 best junior swimmer ");
+                        System.out.println("9. Top 5 best senior swimmer ");
                         controller.SortedOptionsForCoach();
                         break;
-
+                    case 4:
+                        System.out.println("1.All members expected payment");
+                        //lav første og andet comparator
+                        System.out.println("2. ... ");
+                        controller.sortedOptionsForAccountant();
+                        break;
                     case 5:
                         controller.searchSwimmer();
                         break;
 
-                        // Training result for each swimmer
+                    // Training result for each swimmer
                     case 6:
                         System.out.println("Enter the name of the swimmer:");
                         String swimmerName = scanner.nextLine();
@@ -74,7 +81,6 @@ public class UserInterface {
                         System.out.println("Training times for all swimmers:");
                         controller.getBestTrainingResultForSwimmer("idk");
                         break;
-
 
 
                     case 9:
@@ -96,10 +102,5 @@ public class UserInterface {
 
         }
     }
-
-
-
-
-
 
 }
