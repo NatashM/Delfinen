@@ -53,12 +53,16 @@ public class UserInterface {
                         System.out.println("9. Top 5 best senior swimmer ");
                         controller.SortedOptionsForCoach();
                         break;
-                    case 4:
-                        System.out.println("1.All members expected payment");
-                        //lav første og andet comparator
-                        System.out.println("2. ... ");
+
+                    case 4:// List for accountant
+                        System.out.println("1. Show all the membership fees");
+                        System.out.println("2. View all members dues status");
+                        System.out.println("3. Search for a members information");
+                        System.out.println("4. Update member dues");
+
                         controller.sortedOptionsForAccountant();
-                        break;
+
+
                     case 5:
                         controller.searchSwimmer();
                         break;

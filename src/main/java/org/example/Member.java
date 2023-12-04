@@ -1,5 +1,6 @@
 package org.example;
-
+import java.util.Scanner;
+import java.util.ArrayList;
 import java.time.LocalDate;
 
 public class Member {
@@ -18,8 +19,7 @@ public class Member {
     //private LocalDate lastPaymentDate;
 
 
-
-    public Member(String name, int age, String birthDay, String address, boolean isActive, String grade, String swimType,String trainingTime) {
+    public Member(String name, int age, String birthDay, String address, boolean isActive, String grade, String swimType, String trainingTime) {
         this.name = name;
         this.age = age;
         this.birthDay = birthDay;
@@ -54,21 +54,22 @@ public class Member {
         return address;
     }
 
-    public boolean getIsActive(){
+    public boolean getIsActive() {
         return isActive;
     }
 
-    public String getGrade(){
+    public String getGrade() {
         return grade;
     }
 
-    public String getSwimType(){
+    public String getSwimType() {
         return swimType;
     }
 
-    public String getTrainingTime(){
+    public String getTrainingTime() {
         return trainingTime;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -86,7 +87,7 @@ public class Member {
         this.age = age;
     }
 
-    public void setBirthDay( String birthday) {
+    public void setBirthDay(String birthday) {
         this.birthDay = birthday;
     }
 
@@ -94,6 +95,7 @@ public class Member {
     public void setAddress(String address) {
         this.address = address;
     }
+
 
     @Override
     public String toString() {
@@ -106,7 +108,6 @@ public class Member {
                 ", Swim discipline = " + swimType +
                 ", Team category = " + grade +
                 ", Training time =" + trainingTime;
-
 
 
     }
