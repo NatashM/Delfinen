@@ -35,6 +35,7 @@ public class FileHandler {
                         attributes[5],
                         attributes[6],
                         attributes[7]
+
                 );
                 MemberDataList.add(swimMemberData1);
 
@@ -60,4 +61,6 @@ public class FileHandler {
         saveToFile.close();
     }
 
-}
+
+        }
+

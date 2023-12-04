@@ -1,11 +1,10 @@
 package org.example;
-import java.util.Scanner;
+
 import java.util.ArrayList;
-import java.time.LocalDate;
 
 public class Member {
     private ArrayList<Member> members = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
+    //private Scanner scanner = new Scanner(System.in);
     private String name;
     private int age;
     private String birthDay;
@@ -15,8 +14,8 @@ public class Member {
     private String swimType;
     private String trainingTime;
     private double paidDues;
+    //private Membership membership;
 
-    //private LocalDate lastPaymentDate;
 
 
     public Member(String name, int age, String birthDay, String address, boolean isActive, String grade, String swimType, String trainingTime) {
@@ -28,7 +27,8 @@ public class Member {
         this.grade = grade;
         this.swimType = swimType;
         this.trainingTime = trainingTime;
-        //this.lastPaymentDate = lastPaymentDate;
+        //this.membership = membership;
+
 
 
     }
@@ -74,13 +74,12 @@ public class Member {
         this.name = name;
     }
 
-
     public void setPaidDues(double newpaidDues) {
         this.paidDues = newpaidDues;
     }
 
-    public double getRemainingDues() {
-        return -paidDues;
+   public double getRemainingDues() {
+        return paidDues;
     }
 
     public void setAge(int age) {
@@ -95,6 +94,7 @@ public class Member {
     public void setAddress(String address) {
         this.address = address;
     }
+
 
 
     @Override
@@ -112,12 +112,5 @@ public class Member {
 
     }
 }
-
-
-
-
-
-
-
 
 
