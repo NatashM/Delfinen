@@ -3,6 +3,8 @@ package org.example;
 import java.time.LocalDate;
 
 public class Member {
+    private ArrayList<Member> members = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
     private String name;
     private int age;
     private String birthDay;
@@ -11,6 +13,8 @@ public class Member {
     private String grade;
     private String swimType;
     private String trainingTime;
+    private double paidDues;
+
     //private LocalDate lastPaymentDate;
 
 
@@ -26,10 +30,15 @@ public class Member {
         this.trainingTime = trainingTime;
         //this.lastPaymentDate = lastPaymentDate;
 
+
     }
 
     public String getName() {
         return name;
+    }
+
+    public double getPaidDues() {
+        return paidDues;
     }
 
     public int getAge() {
@@ -64,6 +73,15 @@ public class Member {
         this.name = name;
     }
 
+
+    public void setPaidDues(double newpaidDues) {
+        this.paidDues = newpaidDues;
+    }
+
+    public double getRemainingDues() {
+        return -paidDues;
+    }
+
     public void setAge(int age) {
         this.age = age;
     }
@@ -93,3 +111,12 @@ public class Member {
 
     }
 }
+
+
+
+
+
+
+
+
+

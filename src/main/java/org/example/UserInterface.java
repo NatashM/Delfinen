@@ -30,7 +30,7 @@ public class UserInterface {
                         controller.createMembers();
                         break;
 
-                    case 2:
+                    case 2: // List for chairman
                         System.out.println("\n 1. Show all members");
                         System.out.println(" 2. Sorted by name");
                         System.out.println(" 3. Sort by active or passive members:");
@@ -40,7 +40,8 @@ public class UserInterface {
 
                         controller.sortedOptionsForChairman();
                         break;
-                    case 3:
+
+                    case 3: // List for coach Whale
                         System.out.println("1. Sort by active or passive members:");
                         System.out.println("2. Sort by name: ");
                         System.out.println("3. Sort by grade:");
@@ -71,7 +72,6 @@ public class UserInterface {
                             System.out.println("Best Training Result for " + swimmerName + ":");
                             System.out.println("Date: " + bestResult.getDate());
                             System.out.println("Discipline: " + bestResult.getSwimmingDiscipline());
-                            // Add more details if needed
                         } else {
                             System.out.println("No training results available for " + swimmerName + ".");
                         }
@@ -81,6 +81,7 @@ public class UserInterface {
                         System.out.println("Training times for all swimmers:");
                         controller.getBestTrainingResultForSwimmer("idk");
                         break;
+
 
 
                     case 9:

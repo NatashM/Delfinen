@@ -15,6 +15,7 @@ public class Database {
     Scanner scanner = new Scanner(System.in);
     private final File file = new File("swimMembersData.csv");
     private final FileHandler filehandler = new FileHandler();
+    private List<Member> teamMembers;
 
 
 
@@ -118,15 +119,12 @@ public class Database {
         String trainingTime = scanner.next();
 
 
-        Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType,trainingTime);
+        Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
 
         MembersData.addMember(Name, Age, birthday, address, isActive, grade, swimType,trainingTime);
 
        System.out.println(member);
     }
-
-
-
 
 
     public void NameComparator() {
@@ -226,15 +224,15 @@ public class Database {
         }else if(searchResult.size() > 1){
 
             int counter = 0;
-            for (Member member : searchResult){
-            if(member.getName().startsWith(userInput)){
-                System.out.println("" + counter++ + "\n" +
-                member.getName() + "\n" +
-                member.getAge() + "\nBorn " +
-                member.getBirthday() + "\nThe swimmer lives in " +
-                member.getAddress() + "\nThe swimmer is either active or non-active based on (true/false) \n" +
-                member.getIsActive() + "\nThe selected swimmer is a " +
-                member.getSwimType() + "\n"
+            for (Member member : searchResult) {
+                if (member.getName().startsWith(userInput)) {
+                    System.out.println("" + counter++ + "\n" +
+                            member.getName() + "\n" +
+                            member.getAge() + "\nBorn " +
+                            member.getBirthday() + "\nThe swimmer lives in " +
+                            member.getAddress() + "\nThe swimmer is either active or non-active based on (yes/no) \n" +
+                            member.getIsActive() + "\nThe selected swimmer is a " +
+                            member.getSwimType() + "\n "
 
                 );
             }
@@ -317,7 +315,24 @@ public class Database {
         }
     }
 
+    public void viewAllMembersDuesStatus() {
+        System.out.println("Membership Dues Status:");
+        for (Member member : members) {
+            double expectedDues = MembershipFee(member);
+            double paidDues = getAmountPaid(member);
 
+            System.out.println("Member: " + member.getName() + ", Age: " + member.getAge() +
+                    ", Member states: " + member.getIsActive() +
+                    ", Expected Dues: " + expectedDues + " kr." +
+                    ", Paid Dues: " + paidDues + " kr." +
+                    ", Dues Status: " + (paidDues >= expectedDues ? "Paid in Full" : "In Arrears"));
+        }
+    }
+
+    private double getAmountPaid(Member member) {
+
+        return 0;
+    }
 
     public void displayAllTrainingTimes() {
         for (Member member : members) {
@@ -336,6 +351,7 @@ public class Database {
         }
     }
 
+
     public double MembershipFee(Member member) {
         int age = member.getAge();
         boolean isActive = member.getIsActive();
@@ -352,7 +368,6 @@ public class Database {
         } else {
             base = 500;
         }
-
         return base;
     }
 
@@ -363,19 +378,81 @@ public class Database {
             double fee = MembershipFee(member);
             totalFees += fee;
 
-            System.out.println("Member: " + member.getName() + ", Age: " + member.getAge()  +", Member states : " + member.getIsActive() +
-                     ", Membership Fee: " + fee + " " + "kr.");
+            System.out.println("Member: " + member.getGrade() + ", Age: " + member.getAge() + ", Member states : " + member.getIsActive() +
+                    ", Membership Fee: " + fee + " " + "kr.");
         }
 
 
         System.out.println("\n Expected monthly turnover: " + totalFees);
     }
 
+    public void displayMemberInformation() {
+        System.out.println("Write the name of the Swimmer");
+        String userInput = scanner.nextLine();
+        ArrayList<Member> searchResult = getMembers();
+        Member foundMember = null;
+
+        for (Member member : members) {
+            if (member.getName().equalsIgnoreCase(userInput)) {
+                foundMember = member;
+                break;
+            }
+        }
+        if (foundMember != null) {
+            System.out.println("Member Information for " + foundMember.getName() + ":");
+            System.out.println("Age: " + foundMember.getAge());
+            System.out.println("Birthday: " + foundMember.getBirthday());
+            System.out.println("Address: " + foundMember.getAddress());
+            System.out.println("Membership Status: " + (foundMember.getIsActive() ? "Active" : "Inactive"));
+            System.out.println("Grade: " + foundMember.getGrade());
+            System.out.println("Swim Discipline: " + foundMember.getSwimType());
+            System.out.println("Training Time: " + foundMember.getTrainingTime());
 
 
+            double expectedDues = MembershipFee(foundMember);
+            double paidDues = getAmountPaid(foundMember);
+
+            System.out.println("Expected Dues: " + expectedDues + " kr.");
+            System.out.println("Paid Dues: " + paidDues + " kr.");
+            System.out.println("Dues Status: " + (paidDues >= expectedDues ? "Paid in Full" : "In Arrears"));
+        } else {
+            System.out.println("Member with the name " + foundMember.getName() + " not found.");
+        }
+
+    }
+
+    public void updatePaidDuesForMember() {
+        System.out.println("Enter the name of the member:");
+        String memberName = scanner.nextLine();
+
+        System.out.println("Enter the new paid dues:");
+        double newPaidDues = scanner.nextDouble();
+
+        Member foundMember = findMemberByName(memberName);
+
+        if (foundMember != null) {
+            foundMember.setPaidDues(newPaidDues);
+            double remainingDues = foundMember.getRemainingDues();
+
+            if (remainingDues == 0) {
+                System.out.println("Member " + foundMember.getName() + " is up to date.");
+            } else {
+                System.out.println("Member " + foundMember.getName() + " still owes " + remainingDues + " in dues.");
+            }
+        } else {
+            System.out.println("Member with the name " + memberName + " not found.");
+        }
+    }
 
 
-
+    private Member findMemberByName(String memberName) {
+        for (Member member : members) {
+            if (member.getName().equalsIgnoreCase(memberName)) {
+                return member;
+            }
+        }
+        return null;
+    }
 
 
     public void sortedOptionsForCoach() {
@@ -383,33 +460,16 @@ public class Database {
         scanner.nextLine();
 
         switch (categorized) {
-            case 1:
-                ActiveComparator();
-                break;
-            case 2:
-                NameComparator();
-                break;
-            case 3:
-                GradeComparator();
-                break;
-            case 4:
-                SwimTypeComparator();
-                break;
-            case 5:
-                SearchSwimmer();
-                break;
-            case 6:
-                trainingTimeComparator();
-                break;
-            case 7:
-                trainingTimeForEachSwimmer();
-                break;
-            case 8: trainingTimeForTopFiveJunior();
-                break;
-            case 9: trainingTimeForTopFiveSenior();
-                break;
-            default:
-                System.out.println("Unable to understand your command.");
+            case 1 -> ActiveComparator();
+            case 2 -> NameComparator();
+            case 3 -> GradeComparator();
+            case 4 -> SwimTypeComparator();
+            case 5 -> SearchSwimmer();
+            case 6 -> trainingTimeComparator();
+            case 7 -> trainingTimeForEachSwimmer();
+            case 8 -> trainingTimeForTopFiveJunior();
+            case 9 -> trainingTimeForTopFiveSenior();
+            default -> System.out.println("Unable to understand your command.");
         }
     }
 
@@ -427,8 +487,6 @@ public class Database {
                 String memberNameToRemove = scanner.nextLine();
                 removeMembers(memberNameToRemove);
             }
-
-
             default -> System.out.println("Unable to understand your command");
         }
     }
@@ -437,10 +495,16 @@ public class Database {
         int categorized = scanner.nextInt();
         scanner.nextLine();
         switch (categorized) {
-            case 1:
-                MemberFee();
-                break;
-            case 2:
-                break;
+            case 1 -> MemberFee();
+            case 2 -> viewAllMembersDuesStatus();
+            case 3 -> displayMemberInformation();
+            case 4 -> updatePaidDuesForMember();
+
+
+
+
+
         }
-    }}
+    }
+
+}
