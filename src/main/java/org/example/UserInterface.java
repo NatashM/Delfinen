@@ -56,7 +56,7 @@ public class UserInterface {
 
                     case 4:// List for accountant
                         System.out.println("1. Show all the membership fees");
-                        System.out.println("2. View all members dues status");
+                        System.out.println("2. View all members in arrears");
                         System.out.println("3. Search for a members information");
                         System.out.println("4. Update member dues");
 

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class Database {
@@ -67,65 +68,83 @@ public class Database {
 
 
     public void CreateMembers() {
-        Database MembersData = new Database();
-        System.out.println("\n write your full name");
-        String Name = scanner.next();
+        boolean correctAnswer = false;
 
-        System.out.println("\n write your age");
-        int Age = scanner.nextInt();
-
-        System.out.println("\n write your birthday");
-        String birthday = scanner.next();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
-        LocalDate dateNow = LocalDate.now();
-
-        LocalDate date = LocalDate.parse(birthday, formatter);
-        int age = dateNow.getYear() - date.getYear();
-
-        String grade = "";
-
-        if (age <= 18) {
-            System.out.println("You will be joining the junior team");
-            grade = "junior";
-
-        } else {
-            System.out.println("You will be joining the senior team");
-            grade = "senior";
-        }
-
-        System.out.println("\n write your address: ");
-        String address = scanner.next();
-
-        boolean isActive;
         do {
-            System.out.print("You want a active membership (yes/no): ");
-            String userInput = scanner.nextLine().toLowerCase();
-            if (userInput.startsWith("y")) {
-                isActive = true;
-                break;
-            } else if (userInput.startsWith("n")) {
-                isActive = false;
+            try {
+                Database MembersData = new Database();
+                System.out.println("\n write your full name");
+                String Name = scanner.next();
 
-            } else {
-                System.out.println("An error occured:/ \n Please write yes or no ");
+                System.out.println("\n write your age");
+                int Age = scanner.nextInt();
+
+                System.out.println("\n write your birthday");
+                String birthday = scanner.next();
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
+                LocalDate dateNow = LocalDate.now();
+
+                LocalDate date = LocalDate.parse(birthday, formatter);
+                int age = dateNow.getYear() - date.getYear();
+
+                String grade = "";
+
+                if (age <= 18) {
+                    System.out.println("You will be joining the junior team");
+                    grade = "junior";
+
+                } else {
+                    System.out.println("You will be joining the senior team");
+                    grade = "senior";
+                }
+
+                System.out.println("\n write your address: ");
+                String address = scanner.next();
+
+                boolean isActive;
+                do {
+                    System.out.print("You want an active membership (yes/no): ");
+                    String userInput = scanner.next().toLowerCase();
+                    if (userInput.startsWith("y")) {
+                        isActive = true;
+                        break;
+                    } else if (userInput.startsWith("n")) {
+                        isActive = false;
+                        break;
+                    }
+
+                } while (true);
+
+                //TODO
+                System.out.println("Your desired swim discipline: Butterfly,Crawl,Backstroke or Breaststroke");
+                String swimType = scanner.next();
+
+                System.out.println("Write your training time");
+                String trainingTime = scanner.next();
+
+                Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
+
+                MembersData.addMember(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
+
+                System.out.println(member);
+
+                correctAnswer = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Type in your age using numeric characters");
+                scanner.nextLine();
+            } catch (DateTimeParseException e) {
+                System.out.println("Error: wrong date format. Use only ddMMyy.");
+                scanner.nextLine();
+            } catch (Exception e) {
+                System.out.println("An error has occurred: " + e.getMessage());
+                scanner.nextLine();
             }
-        } while (true);
-
-
-        System.out.println("Your desired swim discipline: Butterfly,Crawl,Backstroke or Breaststroke");
-        String swimType = scanner.next();
-
-        System.out.println("Write your training time");
-        String trainingTime = scanner.next();
-
-
-        Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
-
-        MembersData.addMember(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
-
-        System.out.println(member);
+        } while (!correctAnswer);
     }
+
+
 
 
     public void NameComparator() {
@@ -226,16 +245,17 @@ public class Database {
             System.out.println("There is no swimmer with that name in the club");
         } else if (searchResult.size() > 1) {
 
-        int counter = 0;
-        for (Member member : searchResult) {
-            if (member.getName().startsWith(userInput)) {
-                System.out.println("" + counter++ + "\n" +
-                member.getName() + "\n" +
-                member.getAge() + "\nBorn " +
-                member.getBirthday() + "\nThe swimmer lives in " +
-                member.getAddress() + "\nThe swimmer is either active or non-active based on (yes/no) \n" +
-                member.getIsActive() + "\nThe selected swimmer is a " +
-                member.getSwimType() + "\n "
+            int counter = 0;
+            for (Member member : searchResult) {
+                if (member.getName().startsWith(userInput)) {
+                    System.out.println("Member ID:" + " " + counter++ + "\n" +
+                            "Name:" + " " + member.getName() + "\n" +
+                            "Name:" + " " + member.getAge() + "\n" +
+                            "Birthday:" + " " + member.getBirthday() + "\n" +
+                            "\nThe swimmer lives in " +
+                            member.getAddress() + "\nThe swimmer is either active or non-active based on (true/false):" + member.getIsActive()
+                            + "\nThe selected swimmer is a " +
+                            member.getSwimType() + "\n "
 
                     );
                 }
@@ -361,7 +381,7 @@ public class Database {
         }
     }
 
-
+    //beregne kontingentet for et enkelt medlem.
     public double MembershipFee(Member member) {
         int age = member.getAge();
         boolean isActive = member.getIsActive();
@@ -387,21 +407,25 @@ public class Database {
         return base;
     }
 
-
+    //beregne kontingentet for et enkelt medlem.
     public void MemberFee() {
         double totalFees = 0;
+        //sorter efter junior der ikke aktive også dem der aktive derefter senior der har et aktivt medlemskab og der efter senior som ikke har
+        GradeComparator gradeComparator = new GradeComparator();
+        Collections.sort(members, gradeComparator);
 
         for (Member member : members) {
             double fee = MembershipFee(member);
             totalFees += fee;
 
-            System.out.println("Member: " + member.getGrade() + ", Age: " + member.getAge() + ", Member states : " + member.getIsActive() +
+            System.out.println("Member: " + member.getName() + ", Age categories: " + member.getGrade() + ", Age: " + member.getAge() + ", Member states : " + member.getIsActive() +
                     ", Membership Fee: " + fee + " " + "kr.");
         }
 
 
-        System.out.println("\n Expected monthly turnover: " + totalFees);
+        System.out.println("\n Expected yearly turnover: " + totalFees);
     }
+
 
     public void displayMemberDuesInformation(Member member) {
         double expectedDues = customizeExpectedDues(member, MembershipFee(member));
