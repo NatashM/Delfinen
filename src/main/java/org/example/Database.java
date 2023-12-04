@@ -18,7 +18,6 @@ public class Database {
     private List<Member> teamMembers;
 
 
-
     public Database() {
         try {
             this.members = filehandler.loadAllData();
@@ -38,9 +37,9 @@ public class Database {
         }
     }
 
-    public void addMember(String name, int age, String birthday, String address, boolean isActive, String grade, String swimType,String trainingTime) {
-        Member newMember = new Member(name, age, birthday, address, isActive, grade, swimType,trainingTime);
-        try{
+    public void addMember(String name, int age, String birthday, String address, boolean isActive, String grade, String swimType, String trainingTime) {
+        Member newMember = new Member(name, age, birthday, address, isActive, grade, swimType, trainingTime);
+        try {
             members.add(newMember);
             filehandler.saveMembers(members, file);
         } catch (FileNotFoundException e) {
@@ -79,21 +78,20 @@ public class Database {
         String birthday = scanner.next();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyy");
-        LocalDate dateNow =  LocalDate.now();
+        LocalDate dateNow = LocalDate.now();
 
         LocalDate date = LocalDate.parse(birthday, formatter);
         int age = dateNow.getYear() - date.getYear();
 
         String grade = "";
 
-        if ( age <= 18 ) {
+        if (age <= 18) {
             System.out.println("You will be joining the junior team");
-            grade ="junior";
+            grade = "junior";
 
-        }
-        else {
+        } else {
             System.out.println("You will be joining the senior team");
-            grade="senior";
+            grade = "senior";
         }
 
         System.out.println("\n write your address: ");
@@ -101,18 +99,21 @@ public class Database {
 
         boolean isActive;
         do {
-            System.out.print("You want a active membership (true/false): ");
-            if (scanner.hasNextBoolean()) {
-                isActive = scanner.nextBoolean();
+            System.out.print("You want a active membership (yes/no): ");
+            String userInput = scanner.nextLine().toLowerCase();
+            if (userInput.startsWith("y")) {
+                isActive = true;
                 break;
+            } else if (userInput.startsWith("n")) {
+                isActive = false;
+
             } else {
-                System.out.println("An error occured:/ \n Please write true or false ");
-                scanner.nextLine();
+                System.out.println("An error occured:/ \n Please write yes or no ");
             }
         } while (true);
 
 
-        System.out.println("Your desired swim discipline");
+        System.out.println("Your desired swim discipline: Butterfly,Crawl,Backstroke or Breaststroke");
         String swimType = scanner.next();
 
         System.out.println("Write your training time");
@@ -121,19 +122,20 @@ public class Database {
 
         Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
 
-        MembersData.addMember(Name, Age, birthday, address, isActive, grade, swimType,trainingTime);
+        MembersData.addMember(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
 
-       System.out.println(member);
+        System.out.println(member);
     }
 
 
     public void NameComparator() {
         NameComparator comparison = new NameComparator();
         Collections.sort(members, comparison);
-        for (Member member: members){
+        for (Member member : members) {
             System.out.println(member.getName());
         }
     }
+
     public void ShowAllMembers() {
         if (members != null) {
             NameComparator comparison = new NameComparator();
@@ -166,9 +168,10 @@ public class Database {
                     System.out.println("Training time: " + " " + member.getTrainingTime());
 
 
-
+                }
+            }
+        }
     }
-}}}
 
     public boolean ActiveComparator() {
         activeComparator comparator = new activeComparator();
@@ -214,14 +217,14 @@ public class Database {
     }
 
 
-    public void SearchSwimmer(){
+    public void SearchSwimmer() {
         System.out.println("Write the name of the Swimmer");
         String userInput = scanner.nextLine();
         ArrayList<Member> searchResult = getMembers();
 
-        if(searchResult.isEmpty()) {
+        if (searchResult.isEmpty()) {
             System.out.println("There is no swimmer with that name in the club");
-        }else if(searchResult.size() > 1){
+        } else if (searchResult.size() > 1) {
 
             int counter = 0;
             for (Member member : searchResult) {
@@ -234,13 +237,13 @@ public class Database {
                             member.getIsActive() + "\nThe selected swimmer is a " +
                             member.getSwimType() + "\n "
 
-                );
-            }
+                    );
+                }
 
             }
-}
+        }
 
-}
+    }
 
     public CompetitorMember findSwimmerByName(String swimmerName) {
         for (Member member : members) {
@@ -278,9 +281,7 @@ public class Database {
     public void trainingTimeForTopFiveSenior() {
         System.out.println("Top 5 swimmers on the senior team");
 
-        // Sorting senior team members by training time
         senior.sort(new TrainingTimeComparator());
-
         // Top 5 swimmers
         for (int i = 0; i < Math.min(5, senior.size()); i++) {
             Member member = senior.get(i);
