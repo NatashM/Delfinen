@@ -72,7 +72,7 @@ public class Database {
 
         do {
             try {
-                Database MembersData = new Database();
+
                 System.out.println("\n write your full name");
                 String Name = scanner.next();
 
@@ -116,7 +116,7 @@ public class Database {
 
                 } while (true);
 
-                //TODO
+
                 System.out.println("Your desired swim discipline: Butterfly,Crawl,Backstroke or Breaststroke");
                 String swimType = scanner.next();
 
@@ -125,7 +125,7 @@ public class Database {
 
                 Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
 
-                MembersData.addMember(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
+                addMember(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
 
                 System.out.println(member);
 
@@ -143,6 +143,7 @@ public class Database {
             }
         } while (!correctAnswer);
     }
+
 
     public void NameComparator() {
         NameComparator comparison = new NameComparator();

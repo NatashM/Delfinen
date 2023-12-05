@@ -1,11 +1,12 @@
-Azra,15,270808,Manhattan,competitor-swimmer,01:60,Junior
-Iman,13,020210,Johannesburg,non-competitor,02:53,Junior
-Marcel,16,140307,Washington Dc,non-competitor,03:30,Junior
-Rhysand,16,120707,Dortmund,Competitor-swimmer,01:30,junior
-Sara,14,030409,Berlin,Competitor-swimmer,03:42,junior
-Will,16,030407,London,Competitor-swimmer,02:42,junior
-Natasha,18,070805,Copenhagen,non-competitor,02:50,Senior
-John,20,200803,London,Competitor-swimmer,01:30,Senior
-Cameron,19,270904,Alabama,Competitor-swimmer,02:09,senior
-Delayne,18,121204,Alanya,Competitor-swimmer,02:04,senior
-Autumn,20,020203,Minneapolis,Competitor-swimmer,01:43,Senior
+Natasha,18,070805,Copenhagen,true,Senior,non-competitor,02:50
+Azra,15,270808,Manhattan,false,Junior,competitor-swimmer,01:60
+John,20,200803,London,true,Senior,Competitor-swimmer,01:30
+Iman,13,020210,Johannesburg,false,Junior,non-competitor,02:53
+Marcel,16,140307,Washington Dc,true,Junior,non-competitor,03:30
+Cameron,19,270904,Alabama,true,senior,Competitor-swimmer,02:09
+Delayne,18,121204,Alanya,true,senior,Competitor-swimmer,02:04
+Rhysand,16,120707,Dortmund,true,junior,Competitor-swimmer,01:30
+Autumn,20,020203,Minneapolis,false,Senior,Competitor-swimmer,01:43
+Sara,14,030409,Berlin,true,junior,Competitor-swimmer,03:42
+Will,16,030407,London,true,junior,Competitor-swimmer,02:42
+Iman,21,020202,Paris,true,senior,Crawl,01:01

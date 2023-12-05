@@ -53,14 +53,15 @@ public class FileHandler {
                     members.getAge() + "," +
                     members.getBirthday() + "," +
                     members.getAddress() + "," +
+                    members.getIsActive() + "," +
+                    members.getGrade() + "," +
                     members.getSwimType() + "," +
-                    members.getTrainingTime() + "," +
-                    members.getGrade());
+                    members.getTrainingTime());
 
         }
         saveToFile.close();
     }
 
 
-        }
+}
 
