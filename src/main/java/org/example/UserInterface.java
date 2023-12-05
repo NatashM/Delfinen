@@ -58,9 +58,11 @@ public class UserInterface {
                         System.out.println("1. Show all the membership fees");
                         System.out.println("2. View all members in arrears");
                         System.out.println("3. Search for a members information");
-                        System.out.println("4. Update member dues");
+                        System.out.println("4. display member information");
+                        System.out.println("5. Update member dues");
 
                         controller.sortedOptionsForAccountant();
+                        break;
 
 
                     case 5:

@@ -144,9 +144,6 @@ public class Database {
         } while (!correctAnswer);
     }
 
-
-
-
     public void NameComparator() {
         NameComparator comparison = new NameComparator();
         Collections.sort(members, comparison);
@@ -240,7 +237,6 @@ public class Database {
         System.out.println("Write the name of the Swimmer");
         String userInput = scanner.nextLine();
         ArrayList<Member> searchResult = getMembers();
-
         if (searchResult.isEmpty()) {
             System.out.println("There is no swimmer with that name in the club");
         } else if (searchResult.size() > 1) {
@@ -297,7 +293,6 @@ public class Database {
         }
     }
 
-
     public void trainingTimeForTopFiveSenior() {
         System.out.println("Top 5 swimmers on the senior team");
 
@@ -335,6 +330,22 @@ public class Database {
             System.out.println();
         }
     }
+    public void displayAllTrainingTimes() {
+        for (Member member : members) {
+            if (member instanceof CompetitorMember) {
+                CompetitorMember competitorMember = (CompetitorMember) member;
+                System.out.println("Swimmer: " + competitorMember.getName());
+                Result bestResult = competitorMember.getBestTrainingResult();
+                if (bestResult != null) {
+                    System.out.println("Best Training Result: " +
+                            bestResult.getTime + " seconds on " + bestResult.getDate());
+                } else {
+                    System.out.println("No training results available.");
+                }
+                System.out.println();
+            }
+        }
+    }
 
     public void viewAllMembersDuesStatus() {
 
@@ -364,24 +375,6 @@ public class Database {
         return member.getPaidDues();
     }
 
-    public void displayAllTrainingTimes() {
-        for (Member member : members) {
-            if (member instanceof CompetitorMember) {
-                CompetitorMember competitorMember = (CompetitorMember) member;
-                System.out.println("Swimmer: " + competitorMember.getName());
-                Result bestResult = competitorMember.getBestTrainingResult();
-                if (bestResult != null) {
-                    System.out.println("Best Training Result: " +
-                            bestResult.getTime + " seconds on " + bestResult.getDate());
-                } else {
-                    System.out.println("No training results available.");
-                }
-                System.out.println();
-            }
-        }
-    }
-
-    //beregne kontingentet for et enkelt medlem.
     public double MembershipFee(Member member) {
         int age = member.getAge();
         boolean isActive = member.getIsActive();
@@ -401,30 +394,55 @@ public class Database {
                 base = (1600 / 4.0) * 3;
             }
         } else {
-            base = 0;
+            base = 500;
+        }
+
+        return base;
+    }
+    public double calculateMembershipFee(Member member) {
+        int age = member.getAge();
+        boolean isActive = member.getIsActive();
+        double base = 0;
+
+        if (isActive) {
+            if (age < 18) {
+                base = 1000;
+                if ("junior".equalsIgnoreCase(member.getGrade())) {
+                    base *= 0.9; // Adjust the fee for junior members
+                }
+            } else if (age >= 18 && age <= 60) {
+                base = 1600;
+                if ("senior".equalsIgnoreCase(member.getGrade())) {
+                    base *= 1.2; // Adjust the fee for senior members
+                }
+            } else if (age > 60) {
+                base = (1600 / 4.0) * 3;
+            }
+        } else {
+            base = 500; // Fee for passive members
         }
 
         return base;
     }
 
-    //beregne kontingentet for et enkelt medlem.
+
     public void MemberFee() {
         double totalFees = 0;
-        //sorter efter junior der ikke aktive også dem der aktive derefter senior der har et aktivt medlemskab og der efter senior som ikke har
+
         GradeComparator gradeComparator = new GradeComparator();
         Collections.sort(members, gradeComparator);
 
         for (Member member : members) {
-            double fee = MembershipFee(member);
+            double fee = calculateMembershipFee(member);
             totalFees += fee;
 
             System.out.println("Member: " + member.getName() + ", Age categories: " + member.getGrade() + ", Age: " + member.getAge() + ", Member states : " + member.getIsActive() +
                     ", Membership Fee: " + fee + " " + "kr.");
         }
 
-
         System.out.println("\n Expected yearly turnover: " + totalFees);
     }
+
 
 
     public void displayMemberDuesInformation(Member member) {
@@ -439,8 +457,6 @@ public class Database {
                 ", Dues Status: " + calculateDuesStatus(paidDues, expectedDues));
     }
 
-
-
     public void updatePaidDuesForMember() {
         System.out.println("Enter the name of the member:");
         String memberName = scanner.nextLine();
@@ -453,20 +469,36 @@ public class Database {
         if (foundMember != null) {
             // Update the paid dues for the member
             foundMember.setPaidDues(newPaidDues);
+        try{
+            filehandler.saveMembers(members, file);
+            System.out.println("Paid dues updated");
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            System.out.println("data could not be saved");
+        }
 
-            // paid dues for the member
-            double expectedDues = MembershipFee(foundMember);
-            double paidDues = getAmountPaid(foundMember);
+            // Display the updated dues information for the member
+            displayMemberDuesInformation(foundMember);
+        } else {
+            System.out.println("Member not found.");
+        }
+    }
+    public void displayMembersInArrears() {
+        System.out.println("Members in Arrears:");
 
-            //  up-to-date or owes dues
-            double remainingDues = expectedDues - paidDues;
-            if (remainingDues == 0) {
-                System.out.println("Member " + foundMember.getName() + " is up to date.");
-            } else {
-                System.out.println("Member " + foundMember.getName() + " still owes " + remainingDues + " in dues.");
+        for (Member member : members) {
+            double expectedDues = customizeExpectedDues(member, calculateMembershipFee(member));
+            double paidDues = customizePaidDues(member, getAmountPaid(member));
+
+            if (paidDues < expectedDues) {
+                System.out.println("Member: " + member.getName() +
+                        ", Expected Dues: " + expectedDues + " kr." +
+                        ", Paid Dues: " + paidDues + " kr." +
+                        ", Dues Status: In Arrears");
             }
         }
     }
+
     private Member findMemberByName(String memberName) {
         for (Member member : members) {
             if (member.getName().equalsIgnoreCase(memberName)) {
@@ -513,21 +545,25 @@ public class Database {
     }
 
     public void sortedOptionsForAccountant() {
-        int categorized = scanner.nextInt();
+        int sortedOptions = scanner.nextInt();
         scanner.nextLine();
-        switch (categorized) {
-            case 1 -> MemberFee();
-            case 2 -> viewAllMembersDuesStatus();
-            case 3 -> {
+        switch (sortedOptions) {
+            case 1 -> MemberFee();  // Calculate membership fees for all members
+            case 2 -> {
                 System.out.println("Enter the name of the member:");
                 String memberName = scanner.nextLine();
                 Member foundMember = findMemberByName(memberName);
-                displayMemberDuesInformation(foundMember);
+                MembershipFee(foundMember);  // Calculate membership fee for a specific member
             }
-            case 4 -> updatePaidDuesForMember();
-
-
+            case 3 -> viewAllMembersDuesStatus();  // Display all members' dues status
+            case 4 -> {
+                System.out.println("Enter the name of the member:");
+                String memberName = scanner.nextLine();
+                Member foundMember = findMemberByName(memberName);
+                displayMemberDuesInformation(foundMember);  // Display dues information for a specific member
+            }
+            case 5 -> updatePaidDuesForMember();  // Update paid dues for a member
+            default -> System.out.println("Unable to understand your command");
         }
     }
-
 }
