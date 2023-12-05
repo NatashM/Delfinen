@@ -20,7 +20,9 @@ public class MemberTest {
 //assert
         ArrayList<Member> expected = new ArrayList<>();
         assertEquals(members, expected);
-    }}
+    }
+
+}
 
 
 //Add member

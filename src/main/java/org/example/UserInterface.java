@@ -56,9 +56,9 @@ public class UserInterface {
 
                     case 4:// List for accountant
                         System.out.println("1. Show all the membership fees");
-                        System.out.println("2. View all members in arrears");
-                        System.out.println("3. Search for a members information");
-                        System.out.println("4. display member information");
+                        System.out.println("2. Display individual fees for members");
+                        System.out.println("3. View all members in arrears");
+                        System.out.println("4. display all information for individual member");
                         System.out.println("5. Update member dues");
 
                         controller.sortedOptionsForAccountant();

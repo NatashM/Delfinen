@@ -170,7 +170,7 @@ public class Database {
     public void trainingTimeForEachSwimmer() {
 
         System.out.println("Enter the name of the swimmer,to find their training time:");
-        String userIndput = scanner.nextLine();
+        String userInput = scanner.nextLine();
 
         ArrayList<Member> searchResult = getMembers();
 
@@ -180,7 +180,7 @@ public class Database {
             int counter = 0;
 
             for (Member member : members) {
-                if (member.getName().startsWith(userIndput)) {
+                if (member.getName().startsWith(userInput)) {
                     System.out.println("Training time: " + " " + member.getTrainingTime());
 
 
@@ -270,27 +270,12 @@ public class Database {
         return null;
     }
 
-
     public Result getBestTrainingResultForSwimmer(String swimmerName) {
         CompetitorMember swimmer = findSwimmerByName(swimmerName);
         if (swimmer != null) {
             return swimmer.getBestTrainingResult();
         }
         return null;
-    }
-
-    private void handleBestTrainingResult() {
-        System.out.println("Enter the name of the swimmer:");
-        String swimmerName = scanner.nextLine();
-        Result bestResult = getBestTrainingResultForSwimmer(swimmerName);
-        if (bestResult != null) {
-            System.out.println("Best Training Result for " + swimmerName + ":");
-            System.out.println("Date: " + bestResult.getDate());
-            System.out.println("Discipline: " + bestResult.getSwimmingDiscipline());
-
-        } else {
-            System.out.println("No training results available for " + swimmerName + ".");
-        }
     }
 
     public void trainingTimeForTopFiveSenior() {
@@ -310,7 +295,6 @@ public class Database {
             System.out.println();
         }
     }
-
     public void trainingTimeForTopFiveJunior() {
         System.out.println("Top 5 swimmers on the junior team");
 
@@ -424,8 +408,6 @@ public class Database {
 
         return base;
     }
-
-
     public void MemberFee() {
         double totalFees = 0;
 
@@ -442,8 +424,6 @@ public class Database {
 
         System.out.println("\n Expected yearly turnover: " + totalFees);
     }
-
-
 
     public void displayMemberDuesInformation(Member member) {
         double expectedDues = customizeExpectedDues(member, MembershipFee(member));
@@ -467,7 +447,7 @@ public class Database {
         Member foundMember = findMemberByName(memberName);
 
         if (foundMember != null) {
-            // Update the paid dues for the member
+            // This method updates the paid dues for the member
             foundMember.setPaidDues(newPaidDues);
         try{
             filehandler.saveMembers(members, file);
@@ -477,25 +457,10 @@ public class Database {
             System.out.println("data could not be saved");
         }
 
-            // Display the updated dues information for the member
+            // This method displays the updated dues information for the member
             displayMemberDuesInformation(foundMember);
         } else {
             System.out.println("Member not found.");
-        }
-    }
-    public void displayMembersInArrears() {
-        System.out.println("Members in Arrears:");
-
-        for (Member member : members) {
-            double expectedDues = customizeExpectedDues(member, calculateMembershipFee(member));
-            double paidDues = customizePaidDues(member, getAmountPaid(member));
-
-            if (paidDues < expectedDues) {
-                System.out.println("Member: " + member.getName() +
-                        ", Expected Dues: " + expectedDues + " kr." +
-                        ", Paid Dues: " + paidDues + " kr." +
-                        ", Dues Status: In Arrears");
-            }
         }
     }
 
@@ -525,7 +490,6 @@ public class Database {
             default -> System.out.println("Unable to understand your command.");
         }
     }
-
     public void sortedOptionsForChairman() {
         int categorized = scanner.nextInt();
         scanner.nextLine();
@@ -543,27 +507,30 @@ public class Database {
             default -> System.out.println("Unable to understand your command");
         }
     }
-
     public void sortedOptionsForAccountant() {
+        //Scenario - medlemmer oplyser accountant om at de har betalt og accountant vil derefter registrer betalingen
+        // i hans system.
         int sortedOptions = scanner.nextInt();
         scanner.nextLine();
         switch (sortedOptions) {
-            case 1 -> MemberFee();  // Calculate membership fees for all members
+            case 1 -> MemberFee();
             case 2 -> {
                 System.out.println("Enter the name of the member:");
                 String memberName = scanner.nextLine();
                 Member foundMember = findMemberByName(memberName);
-                MembershipFee(foundMember);  // Calculate membership fee for a specific member
+                double membershipFee = calculateMembershipFee(foundMember);
+                System.out.println("Membership Fee for " + foundMember.getName() + ": " + membershipFee + " kr.");
             }
-            case 3 -> viewAllMembersDuesStatus();  // Display all members' dues status
+            case 3 -> viewAllMembersDuesStatus();
             case 4 -> {
                 System.out.println("Enter the name of the member:");
                 String memberName = scanner.nextLine();
                 Member foundMember = findMemberByName(memberName);
-                displayMemberDuesInformation(foundMember);  // Display dues information for a specific member
+                displayMemberDuesInformation(foundMember);
             }
-            case 5 -> updatePaidDuesForMember();  // Update paid dues for a member
+            case 5 -> updatePaidDuesForMember();
             default -> System.out.println("Unable to understand your command");
-        }
+        } //HVAD VILLE DER SKER HVIS DER BLIVER LAVET EN METODE SOM LEDER VISER EN LISTE
+        // AF MEDLEMMER SOM IKKE HAR BETALT?
     }
 }
