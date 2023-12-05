@@ -508,8 +508,7 @@ public class Database {
         }
     }
     public void sortedOptionsForAccountant() {
-        //Scenario - medlemmer oplyser accountant om at de har betalt og accountant vil derefter registrer betalingen
-        // i hans system.
+    //medlemmer oplyser accountant om at de har betalt og accountant vil derefter registrer betalingen i hans system.
         int sortedOptions = scanner.nextInt();
         scanner.nextLine();
         switch (sortedOptions) {
@@ -532,5 +531,6 @@ public class Database {
             default -> System.out.println("Unable to understand your command");
         } //HVAD VILLE DER SKER HVIS DER BLIVER LAVET EN METODE SOM LEDER VISER EN LISTE
         // AF MEDLEMMER SOM IKKE HAR BETALT?
+
     }
 }
