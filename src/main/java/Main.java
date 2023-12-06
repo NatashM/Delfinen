@@ -1,4 +1,4 @@
-package org.example;
+import userinterface.UserInterface;
 
 public class Main {
 

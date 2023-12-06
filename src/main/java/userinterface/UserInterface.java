@@ -1,8 +1,8 @@
-package org.example;
+package userinterface;
 
-import org.example.Controller;
+import entities.Result;
+import controller.Controller;
 
-import java.sql.SQLOutput;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -14,10 +14,10 @@ public class UserInterface {
     public void startProgram() {
         boolean exitProgram = false;
         while (!exitProgram) {
-            System.out.println("\nWelcome to the dolphin swim club!");
+            System.out.println("\nDOLPHIN CLUB!");
             System.out.println("""
                     -------------------------------------------
-                    How would you like to access the system :
+                    HOW WOULD YOU LIKE TO ACCESS THE SYSTEM :
                     --------------------------------------------
                     1. New member? please proceed to sign up!
                     2. Dolphin clubs chairman
@@ -31,37 +31,51 @@ public class UserInterface {
                 scanner.nextLine();
                 switch (choice) {
                     case 1 -> controller.createMembers();
-                    case 2 -> { // List for chairman
-                        System.out.println("\n 1. Show all members");
-                        System.out.println(" 2. Sorted by name");
-                        System.out.println(" 3. Sort by active or passive members:");
-                        System.out.println(" 4. Sort by grade: ");
-                        System.out.println(" 5. Sort by competition status:");
-                        System.out.println(" 6. Remove a member from the club");
+                    case 2 -> {
+                        System.out.println("""
+                    -------------------------------------------
+                    LIST FOR CHAIRMAN OF THE CLUB
+                    --------------------------------------------
+                    \n1. Show all member
+                    2. Sorted list of the members names:\s
+                    3. Sorted list of active or passive members:
+                    4. Sorted list divided into year grade:\s
+                    5. Sorted list of competition status:\s
+                    6. Remove a member from the system:\s
+                    """);
                         controller.sortedOptionsForChairman();
                     }
-                    case 3 -> { // List for coach Whale
-                        System.out.println("1. Sort by active or passive members:");
-                        System.out.println("2. Sort by name: ");
-                        System.out.println("3. Sort by grade:");
-                        System.out.println("4. Sort by competition status:");
-                        System.out.println("5. Search for a swimmer");
-                        System.out.println("6. Training times for all swimmers");
-                        System.out.println("7. Training time for each swimmer");
-                        System.out.println("8. Top 5 best junior swimmer ");
-                        System.out.println("9. Top 5 best senior swimmer ");
+                    case 3 -> {
+                        System.out.println("""
+                    -------------------------------------------
+                    LIST FOR COACH WHALE
+                    --------------------------------------------
+                    \n1. Sorted list of active or passive members
+                    2. Sorted list of names:\s
+                    3. Sorted list divided by grade:
+                    4. Sorted list of competition status:\s
+                    5. Search for a swimmer:\s
+                    6. Training times for all swimmers:\s
+                    7. Training time for each swimmer:\s
+                    8. Top 5 best junior swimmer: \s
+                    9. Top 5 best senior swimmer: \s 
+                    """);
                         controller.SortedOptionsForCoach();
                     }
-                    case 4 -> {// List for accountant
-                        System.out.println("1. Show all the membership fees");
-                        System.out.println("2. Display individual fees for members");
-                        System.out.println("3. View all members in arrears");
-                        System.out.println("4. display all information for individual member");
-                        System.out.println("5. Update member dues");
+                    case 4 -> {
+                        System.out.println("""
+                    -------------------------------------------
+                    LIST FOR ACCOUNTANT
+                    --------------------------------------------
+                    \n1. Show all membership fees: 
+                    2. Display individual fees for members:\s
+                    3. View all members that is in arrears:\s
+                    4. Display all information for individual a member:\s
+                    5. Update member dues:\s
+                       """);
                         controller.sortedOptionsForAccountant();
                     }
                     case 5 -> controller.searchSwimmer();
-
                     // Training result for each swimmer
                     case 6 -> {
                         System.out.println("Enter the name of the swimmer:");
@@ -97,5 +111,4 @@ public class UserInterface {
 
         }
     }
-
 }

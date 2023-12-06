@@ -1,6 +1,4 @@
-package org.example;
-
-import org.example.CompetitorMember;
+package entities;
 
 import java.time.LocalDate;
 

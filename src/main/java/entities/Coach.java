@@ -1,7 +1,4 @@
-package org.example;
-
-import org.example.CompetitorMember;
-import org.example.Result;
+package entities;
 
 import java.util.List;
 

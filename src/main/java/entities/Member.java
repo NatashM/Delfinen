@@ -1,10 +1,9 @@
-package org.example;
+package entities;
 
 import java.util.ArrayList;
 
 public class Member {
     private ArrayList<Member> members = new ArrayList<>();
-    //private Scanner scanner = new Scanner(System.in);
     private String name;
     private int age;
     private String birthDay;
@@ -14,7 +13,7 @@ public class Member {
     private String swimType;
     private String trainingTime;
     private double paidDues;
-    //private Membership membership;
+
 
 
 
@@ -27,7 +26,6 @@ public class Member {
         this.grade = grade;
         this.swimType = swimType;
         this.trainingTime = trainingTime;
-        //this.membership = membership;
 
 
 

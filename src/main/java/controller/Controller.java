@@ -1,4 +1,7 @@
-package org.example;
+package controller;
+
+import database.Database;
+import entities.Result;
 
 public class Controller {
     private Database database = new Database();

@@ -1,7 +1,8 @@
-package org.example;
+package filehanlder;
+import entities.Member;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.PrintStream;
@@ -56,7 +57,8 @@ public class FileHandler {
                     members.getIsActive() + "," +
                     members.getGrade() + "," +
                     members.getSwimType() + "," +
-                    members.getTrainingTime());
+                    members.getTrainingTime() +"," +
+                    members.getPaidDues());
 
         }
         saveToFile.close();

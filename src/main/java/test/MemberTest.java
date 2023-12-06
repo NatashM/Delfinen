@@ -1,6 +1,5 @@
 package test;
-
-import org.example.Member;
+import entities.Member;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,10 +20,6 @@ public class MemberTest {
         ArrayList<Member> expected = new ArrayList<>();
         assertEquals(members, expected);
     }
-
 }
 
 
-//Add member
-// competitor member
-//kontigentbetalinger
