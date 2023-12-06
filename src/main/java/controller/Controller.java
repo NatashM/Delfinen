@@ -1,10 +1,10 @@
 package controller;
 
 import database.Database;
-import entities.Result;
+import entity.Result;
 
 public class Controller {
-    private Database database = new Database();
+    private final Database database = new Database();
 
 
     public void createMembers(){

@@ -1,5 +1,5 @@
-package filehanlder;
-import entities.Member;
+package filehandler;
+import entity.Member;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

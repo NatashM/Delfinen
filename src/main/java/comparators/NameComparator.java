@@ -1,6 +1,6 @@
 package comparators;
 
-import entities.Member;
+import entity.Member;
 
 import java.util.Comparator;
 

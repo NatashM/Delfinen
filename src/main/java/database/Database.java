@@ -1,10 +1,10 @@
 package database;
 
 import comparators.*;
-import entities.CompetitorMember;
-import entities.Member;
-import entities.Result;
-import filehanlder.FileHandler;
+import entity.CompetitorMember;
+import entity.Member;
+import entity.Result;
+import filehandler.FileHandler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,8 +15,8 @@ import java.util.*;
 
 public class Database {
     private ArrayList<Member> members;
-    private ArrayList<Member> senior = new ArrayList<>();
-    private ArrayList<Member> junior = new ArrayList<>();
+    private final ArrayList<Member> senior = new ArrayList<>();
+    private final ArrayList<Member> junior = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
     private final File file = new File("swimMembersData.csv");
     private final FileHandler filehandler = new FileHandler();
@@ -142,7 +142,7 @@ public class Database {
     }
     public void NameComparator() {
         NameComparator comparison = new NameComparator();
-        Collections.sort(members, comparison);
+        members.sort(comparison);
         for (Member member : members) {
             System.out.println(member.getName());
         }
@@ -150,7 +150,7 @@ public class Database {
     public void ShowAllMembers() {
         if (members != null) {
             NameComparator comparison = new NameComparator();
-            Collections.sort(members, comparison);
+            members.sort(comparison);
             System.out.println("A list of all members:");
             for (Member member : members) {
                 System.out.println(member);
@@ -181,21 +181,20 @@ public class Database {
             }
         }
     }
-    public boolean ActiveComparator() {
+    public void ActiveComparator() {
         activeComparator comparator = new activeComparator();
-        Collections.sort(members, comparator);
+        members.sort(comparator);
 
         for (Member member : members) {
             if (member.getIsActive())
-                return true;
+                return;
             System.out.println(member.getName() + " = " + member.getIsActive());
 
         }
-        return false;
     }
     public void GradeComparator() {
         GradeComparator gradeComparator = new GradeComparator();
-        Collections.sort(members, gradeComparator);
+        members.sort(gradeComparator);
 
         for (Member member : members) {
             System.out.println(member.getName() + " = " + member.getGrade());
@@ -205,7 +204,7 @@ public class Database {
     }
     public void SwimTypeComparator() {
         SwimTypeComparator swimTypeComparator = new SwimTypeComparator();
-        Collections.sort(members, swimTypeComparator);
+        members.sort(swimTypeComparator);
 
         for (Member member : members) {
             System.out.println(member.getSwimType());
@@ -214,7 +213,7 @@ public class Database {
 
     public void trainingTimeComparator() {
         TrainingTimeComparator trainingTimeComparator = new TrainingTimeComparator();
-        Collections.sort(members, trainingTimeComparator);
+        members.sort(trainingTimeComparator);
 
         for (Member member : members) {
             System.out.println(member.getName() + " = " + member.getTrainingTime());
@@ -287,9 +286,7 @@ public class Database {
     public void trainingTimeForTopFiveJunior() {
         System.out.println("Top 5 swimmers on the junior team");
 
-
         junior.sort(new TrainingTimeComparator());
-
 
         for (int i = 0; i < Math.min(5, junior.size()); i++) {
             Member member = junior.get(i);
@@ -305,8 +302,7 @@ public class Database {
     }
     public void displayAllTrainingTimes() {
         for (Member member : members) {
-            if (member instanceof CompetitorMember) {
-                CompetitorMember competitorMember = (CompetitorMember) member;
+            if (member instanceof CompetitorMember competitorMember) {
                 System.out.println("Swimmer: " + competitorMember.getName());
                 Result bestResult = competitorMember.getBestTrainingResult();
                 if (bestResult != null) {
@@ -375,7 +371,7 @@ public class Database {
         double totalFees = 0;
 
         GradeComparator gradeComparator = new GradeComparator();
-        Collections.sort(members, gradeComparator);
+        members.sort(gradeComparator);
 
         for (Member member : members) {
             double fee = MembershipFee(member);
@@ -489,8 +485,7 @@ public class Database {
             }
             case 5 -> updatePaidDuesForMember();
             default -> System.out.println("Unable to understand your command");
-        } //HVAD VILLE DER SKER HVIS DER BLIVER LAVET EN METODE SOM LEDER VISER EN LISTE
-        // AF MEDLEMMER SOM IKKE HAR BETALT?
+        }
 
     }
 }

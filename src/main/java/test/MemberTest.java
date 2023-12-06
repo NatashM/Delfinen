@@ -1,5 +1,5 @@
 package test;
-import entities.Member;
+import entity.Member;
 import org.junit.Test;
 
 import java.util.ArrayList;

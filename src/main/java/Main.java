@@ -1,4 +1,4 @@
-import userinterface.UserInterface;
+import userInterface.UserInterface;
 
 public class Main {
 

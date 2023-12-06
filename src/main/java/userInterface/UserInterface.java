@@ -1,6 +1,6 @@
-package userinterface;
+package userInterface;
 
-import entities.Result;
+import entity.Result;
 import controller.Controller;
 
 import java.time.format.DateTimeParseException;
@@ -25,7 +25,6 @@ public class UserInterface {
                     4. Accountant\s
                     8. Exit program
                     """);
-
             try {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -58,7 +57,7 @@ public class UserInterface {
                     6. Training times for all swimmers:\s
                     7. Training time for each swimmer:\s
                     8. Top 5 best junior swimmer: \s
-                    9. Top 5 best senior swimmer: \s 
+                    9. Top 5 best senior swimmer: \s
                     """);
                         controller.SortedOptionsForCoach();
                     }
@@ -67,7 +66,7 @@ public class UserInterface {
                     -------------------------------------------
                     LIST FOR ACCOUNTANT
                     --------------------------------------------
-                    \n1. Show all membership fees: 
+                    \n1. Show all membership fees:\s
                     2. Display individual fees for members:\s
                     3. View all members that is in arrears:\s
                     4. Display all information for individual a member:\s
