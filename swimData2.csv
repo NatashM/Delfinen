@@ -1,13 +1,19 @@
-Name;Age;Birthday;Address;Activity type;Grade;Competition status;Training time;
-Natasha;18;070805;Copenhagen;true;Senior;non-competitor;02:50
-Azra;15;270808;Manhattan;false;Junior;competitor-swimmer;01:60
-John;20;200803;London;True;Senior;Competitor-swimmer;01:30
-Iman;13;020210;Johannesburg;False;Junior;non-competitor;02:53
-Marcel;16;140307;Washington Dc;true;Junior;non-competitor;03:30
-Cameron;19;270904;Alabama;true;senior;Competitor-swimmer;02:09
-Delayne;18;121204;Alanya;true;senior;Competitor-swimmer;02:04
-Rhysand;16;120707;Dortmund;True;junior;Competitor-swimmer;01:30
-Autumn;20;020203;Minneapolis;false;Senior;Competitor-swimmer;01:43
-Sara;14;030409;Berlin;true;junior;Competitor-swimmer;03:42
-Will;16;030407;London;true;junior;Competitor-swimmer;02:42
-Henrik;62;280861;Oslo;true;Senior;non-competitor;05:22
+Azriel,16,070307,Glastonbury,true,Butterfly,02,06
+Azra,15,270808,Manhattan,true,Junior,Butterfly,01:60
+Iman,13,020210,Johannesburg,false,Junior,null,02:53
+Marcel,16,140307,Washington Dc,true,Junior,Backstroke,03:30
+Rhysand,16,120707,Dortmund,true,junior,Butterfly,01:30
+Sara,14,030409,Berlin,true,junior,Crawl,03:42
+Will,16,030407,London,true,junior,Crawl,02:42
+Aida;18;030605,Salem,true,Senior,Crawl,02:02
+Malcolm,10,070710,Cambury,true,junior,Backstroke,03:20
+Matthew,15,020208,Houston,true,Junior,Breaststroke,03:10
+Natasha,18,070805,Copenhagen,true,Senior,Backstroke,02:50
+John,20,200803,London,true,Senior,Butterfly,01:30
+Cameron,19,270904,Alabama,true,senior,Crawl,02:09
+Delayne,18,121204,Alanya,true,senior,Competitor-swimmer,02:04
+Autumn,20,020203,Minneapolis,false,Senior,null,01:43
+Henrik,62,280861,Oslo,true,Senior,Crawl,05:22
+Andre,26,030497,California,true,Senior,Breaststroke,02:10
+Alma,20,030403,Atlanta,true,Senior,Butterfly,01:65
+Noelle,24,020299,Vegas,true,Senior,Backstroke,01:03

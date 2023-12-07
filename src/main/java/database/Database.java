@@ -12,14 +12,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Database {
     private ArrayList<Member> members;
     private final ArrayList<Member> senior = new ArrayList<>();
     private final ArrayList<Member> junior = new ArrayList<>();
+
     Scanner scanner = new Scanner(System.in);
-    private final File file = new File("swimMembersData.csv");
-    private final FileHandler filehandler = new FileHandler();
+
+    private File CSVFile = new File("swimData2.csv");
+    private FileHandler filehandler = new FileHandler();
 
     public Database() {
         try {
@@ -29,6 +32,7 @@ public class Database {
             e.printStackTrace();
         }
     }
+
     public void splitMembers() {
         for (Member member : members) {
             if (member.getAge() < 18) {
@@ -38,15 +42,19 @@ public class Database {
             }
         }
     }
+
+
+
     public void addMember(String name, int age, String birthday, String address, boolean isActive, String grade, String swimType, String trainingTime) {
         Member newMember = new Member(name, age, birthday, address, isActive, grade, swimType, trainingTime);
         try {
             members.add(newMember);
-            filehandler.saveMembers(members, file);
+            filehandler.saveMembers(members, CSVFile);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
+
     public boolean removeMembers(String name) {
         for (Member swimMembers : members) {
             if (swimMembers.getName().equalsIgnoreCase(name)) {
@@ -60,6 +68,7 @@ public class Database {
         return false;
 
     }
+
     public ArrayList<Member> getMembers() {
         return members;
     }
@@ -114,7 +123,7 @@ public class Database {
                 } while (true);
 
 
-                if(isActive) {
+                if (isActive) {
                     System.out.println("Enter desired swim discipline: Butterfly,Crawl,Backstroke or Breaststroke");
                     String swimType = scanner.next();
 
@@ -153,6 +162,7 @@ public class Database {
             }
         } while (!correctAnswer);
     }
+
     public void NameComparator() {
         NameComparator comparison = new NameComparator();
         members.sort(comparison);
@@ -160,6 +170,7 @@ public class Database {
             System.out.println(member.getName());
         }
     }
+
     public void ShowAllMembers() {
         if (members != null) {
             NameComparator comparison = new NameComparator();
@@ -173,6 +184,7 @@ public class Database {
         }
 
     }
+
     public void trainingTimeForEachSwimmer() {
 
         System.out.println("Enter the name of the swimmer,to find their training time:");
@@ -194,6 +206,7 @@ public class Database {
             }
         }
     }
+
     public void ActiveComparator() {
         activeComparator comparator = new activeComparator();
         members.sort(comparator);
@@ -205,6 +218,7 @@ public class Database {
 
         }
     }
+
     public void GradeComparator() {
         GradeComparator gradeComparator = new GradeComparator();
         members.sort(gradeComparator);
@@ -215,6 +229,7 @@ public class Database {
         }
 
     }
+
     public void SwimTypeComparator() {
         SwimTypeComparator swimTypeComparator = new SwimTypeComparator();
         members.sort(swimTypeComparator);
@@ -279,15 +294,43 @@ public class Database {
         return null;
     }
 
-    public void trainingTimeForTopFiveSenior() {
-        System.out.println("Top 5 swimmers on the senior team");
 
-        senior.sort(new TrainingTimeComparator());
+    public void trainingTimeForTopFiveSeniorAndJunior(String swimType) {
+        ArrayList<Member> swimTypeJunior = new ArrayList<>();
+        ArrayList<Member> swimTypeSenior = new ArrayList<>();
 
-        for (int i = 0; i < Math.min(5, senior.size()); i++) {
-            Member member = senior.get(i);
-            System.out.println("Swimmer: " + member.getName());
-            String trainingTime = member.getTrainingTime();
+        for (Member member : members) {
+            if (member.getSwimType().equalsIgnoreCase(swimType) && member.getAge() < 18) {
+                swimTypeJunior.add(member);
+                System.out.println("Junior");
+            } else if (member.getSwimType().equals(swimType) && member.getAge() > 18) {
+                swimTypeSenior.add(member);
+
+            }
+        }
+        swimTypeSenior.sort(new TrainingTimeComparator());
+        swimTypeJunior.sort(new TrainingTimeComparator());
+
+        for (int i = 0; i < Math.min(5, swimTypeSenior.size()); i++) {
+            Member member1 = swimTypeSenior.get(i);
+            System.out.println("Seniors");
+            System.out.println("Swimmer: " + member1.getName());
+            System.out.println("Swim type: " + member1.getSwimType());
+            String trainingTime = member1.getTrainingTime();
+            if (trainingTime != null && !trainingTime.isEmpty()) {
+                System.out.println("Best Training Time: " + trainingTime + " seconds");
+            } else {
+                System.out.println("No training results available.");
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < Math.min(5, swimTypeJunior.size()); i++) {
+            Member member1 = swimTypeJunior.get(i);
+            System.out.println("Juniors");
+            System.out.println("Swimmer: " + member1.getName());
+            System.out.println("Swim type: " + member1.getSwimType());
+            String trainingTime = member1.getTrainingTime();
             if (trainingTime != null && !trainingTime.isEmpty()) {
                 System.out.println("Best Training Time: " + trainingTime + " seconds");
             } else {
@@ -296,23 +339,7 @@ public class Database {
             System.out.println();
         }
     }
-    public void trainingTimeForTopFiveJunior() {
-        System.out.println("Top 5 swimmers on the junior team");
 
-        junior.sort(new TrainingTimeComparator());
-
-        for (int i = 0; i < Math.min(5, junior.size()); i++) {
-            Member member = junior.get(i);
-            System.out.println("Swimmer: " + member.getName());
-            String trainingTime = member.getTrainingTime();
-            if (trainingTime != null && !trainingTime.isEmpty()) {
-                System.out.println("Best Training Time: " + trainingTime + " seconds");
-            } else {
-                System.out.println("No training results available.");
-            }
-            System.out.println();
-        }
-    }
     public void displayAllTrainingTimes() {
         for (Member member : members) {
             if (member instanceof CompetitorMember competitorMember) {
@@ -331,12 +358,12 @@ public class Database {
 
     public void viewAllMembersDuesStatus() {
 
-            System.out.println("Membership Dues Information:");
-            for (Member member : members) {
-                displayMemberDuesInformation(member);
-                System.out.println();
-            }
+        System.out.println("Membership Dues Information:");
+        for (Member member : members) {
+            displayMemberDuesInformation(member);
+            System.out.println();
         }
+    }
 
     public double customizeExpectedDues(Member member, double expectedDues) {
         if (!member.getIsActive()) {
@@ -420,13 +447,13 @@ public class Database {
 
         if (foundMember != null) {
             foundMember.setPaidDues(newPaidDues);
-        try{
-            filehandler.saveMembers(members, file);
-            System.out.println("Paid dues updated");
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-            System.out.println("data could not be saved");
-        }
+            try {
+                filehandler.saveMembers(members, CSVFile);
+                System.out.println("Paid dues updated");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                System.out.println("data could not be saved");
+            }
 
             displayMemberDuesInformation(foundMember);
         } else {
@@ -447,6 +474,7 @@ public class Database {
         int categorized = scanner.nextInt();
         scanner.nextLine();
 
+
         switch (categorized) {
             case 1 -> ActiveComparator();
             case 2 -> NameComparator();
@@ -455,11 +483,56 @@ public class Database {
             case 5 -> SearchSwimmer();
             case 6 -> trainingTimeComparator();
             case 7 -> trainingTimeForEachSwimmer();
-            case 8 -> trainingTimeForTopFiveJunior();
-            case 9 -> trainingTimeForTopFiveSenior();
+            case 8 -> sortedOptionsForTopFiveJunior();//rette
+            case 9 -> sortedOptionsForTopFiveSenior();//rette
             default -> System.out.println("Unable to understand your command.");
         }
     }
+    public void sortedOptionsForTopFiveJunior() {
+        System.out.println("""
+                LIST OF TOP FIVE JUNIOR FOREACH SWIM DISCIPLINE
+                                    
+                1. Top five for Butterfly:\s
+                2. Top five for Crawl:\s
+                3. Top five for Backstroke:\s
+                4. Top five for Breaststroke:\s
+                          
+                """);
+        int categorized = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (categorized) {
+            case 1 -> trainingTimeForTopFiveSeniorAndJunior("Butterfly");
+            case 2 -> trainingTimeForTopFiveSeniorAndJunior("Crawl");
+            case 3 -> trainingTimeForTopFiveSeniorAndJunior("BackStroke");
+            case 4 -> trainingTimeForTopFiveSeniorAndJunior("BreastStroke");
+
+            default -> System.out.println("Unable to understand your command");
+
+        }
+    }
+    public void sortedOptionsForTopFiveSenior() {
+        int categorized = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("""
+                LIST OF TOP FIVE SENIOR FOREACH SWIM DISCIPLINE
+                                    
+                1. Top five for Butterfly:\s
+                2. Top five for Crawl:\s
+                3. Top five for Backstroke:\s
+                4. Top five for Breaststroke:\s
+                              
+                """);
+
+        switch (categorized) {
+            case 1 -> trainingTimeForTopFiveSeniorAndJunior("Butterfly");
+            case 2 -> trainingTimeForTopFiveSeniorAndJunior("Crawl");
+            case 3 -> trainingTimeForTopFiveSeniorAndJunior("BackStroke");
+            case 4 -> trainingTimeForTopFiveSeniorAndJunior("BreastStroke");
+
+            default -> System.out.println("Unable to understand your command");
+        } }
+
     public void sortedOptionsForChairman() {
         int categorized = scanner.nextInt();
         scanner.nextLine();
@@ -477,6 +550,7 @@ public class Database {
             default -> System.out.println("Unable to understand your command");
         }
     }
+
     public void sortedOptionsForAccountant() {
         int sortedOptions = scanner.nextInt();
         scanner.nextLine();

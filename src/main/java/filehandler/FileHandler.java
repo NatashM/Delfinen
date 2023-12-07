@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 
 public class FileHandler {
-    private final File CSVFile = new File("swimData2.csv");
+    private File CSVFile = new File("swimData2.csv");
 
     public ArrayList<Member> loadAllData() {
         ArrayList<Member> MemberDataList = new ArrayList<>();
@@ -20,11 +20,12 @@ public class FileHandler {
             filescanner.nextLine();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
+
         }
         Member swimMembers = null;
         while (filescanner.hasNext()) {
             String line = filescanner.nextLine();
-            String[] attributes = line.split(";");
+            String[] attributes = line.split(",");
 
             if (attributes.length >= 8) {
                 Member swimMemberData1 = new Member (
@@ -36,18 +37,18 @@ public class FileHandler {
                         attributes[5],
                         attributes[6],
                         attributes[7]
-
                 );
                 MemberDataList.add(swimMemberData1);
 
             }
         }
         return MemberDataList;
+
     }
 
 
-    public void saveMembers(ArrayList<Member> listOfMembersToSave, File file) throws FileNotFoundException {
-        PrintStream saveToFile = new PrintStream(file);
+    public void saveMembers(ArrayList<Member> listOfMembersToSave,File CSVFile ) throws FileNotFoundException {
+        PrintStream saveToFile = new PrintStream(CSVFile);
 
         for (Member members : listOfMembersToSave) {
             saveToFile.println(members.getName() + "," +
@@ -57,8 +58,7 @@ public class FileHandler {
                     members.getIsActive() + "," +
                     members.getGrade() + "," +
                     members.getSwimType() + "," +
-                    members.getTrainingTime() +"," +
-                    members.getPaidDues());
+                    members.getTrainingTime());
 
         }
         saveToFile.close();

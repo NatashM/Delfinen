@@ -23,7 +23,7 @@ public class UserInterface {
                     2. Dolphin clubs chairman
                     3. Coach Whale
                     4. Accountant\s
-                    8. Exit program
+                    10. Exit program
                     """);
             try {
                 int choice = scanner.nextInt();
@@ -32,46 +32,49 @@ public class UserInterface {
                     case 1 -> controller.createMembers();
                     case 2 -> {
                         System.out.println("""
-                    -------------------------------------------
-                    LIST FOR CHAIRMAN OF THE CLUB
-                    --------------------------------------------
-                    \n1. Show all member
-                    2. Sorted list of the members names:\s
-                    3. Sorted list of active or passive members:
-                    4. Sorted list divided into year grade:\s
-                    5. Sorted list of competition status:\s
-                    6. Remove a member from the system:\s
-                    """);
+                                -------------------------------------------
+                                LIST FOR CHAIRMAN OF THE CLUB
+                                --------------------------------------------
+                                \n1. Show all member
+                                2. Sorted list of the members names:\s
+                                3. Sorted list of active or passive members:
+                                4. Sorted list divided into year grade:\s
+                                5. Sorted list of competition status:\s
+                                6. Remove a member from the system:\s
+                                """);
+
                         controller.sortedOptionsForChairman();
                     }
                     case 3 -> {
                         System.out.println("""
-                    -------------------------------------------
-                    LIST FOR COACH WHALE
-                    --------------------------------------------
-                    \n1. Sorted list of active or passive members
-                    2. Sorted list of names:\s
-                    3. Sorted list divided by grade:
-                    4. Sorted list of competition status:\s
-                    5. Search for a swimmer:\s
-                    6. Training times for all swimmers:\s
-                    7. Training time for each swimmer:\s
-                    8. Top 5 best junior swimmer: \s
-                    9. Top 5 best senior swimmer: \s
-                    """);
+                                -------------------------------------------
+                                LIST FOR COACH WHALE
+                                --------------------------------------------
+                                \n1. Sorted list of active or passive members
+                                2. Sorted list of names:\s
+                                3. Sorted list divided by grade:
+                                4. Sorted list of competition status:\s
+                                5. Search for a swimmer:\s
+                                6. Training times for all swimmers:\s
+                                7. Training time for each swimmer:\s
+                                8. Top 5 best junior foreach swim discipline:\s
+                                9. Top 5 best senior foreach swim discipline:\s
+                              
+                       
+                                """);
                         controller.SortedOptionsForCoach();
                     }
                     case 4 -> {
                         System.out.println("""
-                    -------------------------------------------
-                    LIST FOR ACCOUNTANT
-                    --------------------------------------------
-                    \n1. Show all membership fees:\s
-                    2. Display individual fees for members:\s
-                    3. View all members that is in arrears:\s
-                    4. Display all information for individual a member:\s
-                    5. Update member dues:\s
-                       """);
+                                -------------------------------------------
+                                LIST FOR ACCOUNTANT
+                                --------------------------------------------
+                                \n1. Show all membership fees:\s
+                                2. Display individual fees for members:\s
+                                3. View all members that is in arrears:\s
+                                4. Display all information for individual a member:\s
+                                5. Update member dues:\s
+                                   """);
                         controller.sortedOptionsForAccountant();
                     }
                     case 5 -> controller.searchSwimmer();
@@ -91,8 +94,10 @@ public class UserInterface {
                     case 7 -> {
                         System.out.println("Training times for all swimmers:");
                         controller.getBestTrainingResultForSwimmer("idk");
+
                     }
-                    case 8 -> {
+
+                    case 10 -> {
                         System.out.println("The program is closing down");
                         exitProgram = true;
                     }
@@ -109,5 +114,11 @@ public class UserInterface {
             }
 
         }
+
+
+
     }
+
+
+
 }
