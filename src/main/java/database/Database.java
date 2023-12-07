@@ -114,18 +114,31 @@ public class Database {
                 } while (true);
 
 
-                System.out.println("Enter desired swim discipline: Butterfly,Crawl,Backstroke or Breaststroke");
-                String swimType = scanner.next();
+                if(isActive) {
+                    System.out.println("Enter desired swim discipline: Butterfly,Crawl,Backstroke or Breaststroke");
+                    String swimType = scanner.next();
 
-                System.out.println("Enter training time");
-                String trainingTime = scanner.next();
+                    System.out.println("Enter training time");
+                    String trainingTime = scanner.next();
 
-                Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
+                    Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
 
-                addMember(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
+                    addMember(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
 
-                System.out.println(member);
+                    System.out.println(member);
 
+                } else {
+
+                    String swimType = "null";
+                    String trainingTime = "00:00";
+
+                    Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
+
+                    addMember(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
+
+                    System.out.println(member);
+
+                }
                 correctAnswer = true;
 
             } catch (InputMismatchException e) {
