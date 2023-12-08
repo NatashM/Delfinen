@@ -216,7 +216,8 @@ public class Database {
         for (Member member : members) {
             if (member.getIsActive())
                 return;
-            System.out.println(member.getName() + " = " + member.getIsActive());
+            String membershipStatus = member.getIsActive() ? "= active" : "= inactive";
+            System.out.println(member.getName() + " " + membershipStatus);
 
         }
     }

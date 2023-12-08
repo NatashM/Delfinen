@@ -38,7 +38,7 @@ public class UserInterface {
                                 \n1. Show all member
                                 2. Sorted list of the members names:\s
                                 3. Sorted list of active or passive members:
-                                4. Sorted list divided into year grade:\s
+                                4. Sorted list divided into age group:\s
                                 5. Sorted list of competition status:\s
                                 6. Remove a member from the system:\s
                                 """);
@@ -48,17 +48,19 @@ public class UserInterface {
                     case 3 -> {
                         System.out.println("""
                                 -------------------------------------------
-                                LIST FOR CHAIRMAN OF THE CLUB
+                                LIST FOR COACH WHALE
                                 --------------------------------------------
-                                \n1. Show all member
-                                2. Sorted list of the members names:\s
-                                3. Sorted list of active or passive members:
-                                4. Sorted list divided into age group :\s
-                                5. Sorted list of competition status:\s
-                                6. Remove a member from the system:\s
+                                \n1. Sorted list of active or passive members
+                                2. Sorted list of names:\s
+                                3. Sorted list divided by age group:
+                                4. Sorted list of competition status:\s
+                                5. Search for a swimmer:\s
+                                6. Top 5 best junior foreach swim discipline:s
+                                7. Top 5 best senior foreach swim discipline:s
+                            
+                          
                                 """);
-
-                        controller.sortedOptionsForChairman();
+                        controller.SortedOptionsForCoach();
                     }
                     case 4 -> {
                         System.out.println("""
