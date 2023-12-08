@@ -17,7 +17,7 @@ public class Member {
 
 
 
-    public Member(String name, int age, String birthDay, String address, boolean isActive, String grade, String swimType, String trainingTime) {
+    public Member(String name,int age, String birthDay, String address, boolean isActive, String grade, String swimType, String trainingTime) {
         this.name = name;
         this.age = age;
         this.birthDay = birthDay;
@@ -28,20 +28,20 @@ public class Member {
         this.trainingTime = trainingTime;
 
 
-
     }
 
     public String getName() {
         return name;
     }
 
+    public int getAge(){
+        return age;
+    }
+
     public double getPaidDues() {
         return paidDues;
     }
 
-    public int getAge() {
-        return age;
-    }
 
     public String getBirthday() {
         return birthDay;
@@ -76,13 +76,10 @@ public class Member {
         this.paidDues = newpaidDues;
     }
 
-   public double getRemainingDues() {
+    public double getRemainingDues() {
         return paidDues;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public void setBirthDay(String birthday) {
         this.birthDay = birthday;
@@ -97,12 +94,13 @@ public class Member {
 
     @Override
     public String toString() {
-        return "\n" + "Members:" +
-                " Name = " + name +
-                ", Age = " + age +
+        String membershipStatus = isActive ? "Membership = active" : "Membership = inactive";
+
+        return "\n" +
+                " Name: " + name +
                 ", Birthday = " + birthDay +
                 ", Address = " + address + " " +
-                ", Membership = " + isActive +
+                "," + membershipStatus +
                 ", Swim discipline = " + swimType +
                 ", Team category = " + grade +
                 ", Training time =" + trainingTime;

@@ -112,15 +112,17 @@ public class Database {
                 do {
                     System.out.print("Would you like an active membership Yes or No: ");
                     String userInput = scanner.next().toLowerCase();
-                    if (userInput.startsWith("y")) {
+
+                    if (userInput.startsWith("")) {
                         isActive = true;
                         break;
-                    } else if (userInput.startsWith("n")) {
+                    } else if (userInput.startsWith("No")) {
                         isActive = false;
                         break;
                     }
 
                 } while (true);
+
 
 
                 if (isActive) {
@@ -223,12 +225,17 @@ public class Database {
         GradeComparator gradeComparator = new GradeComparator();
         members.sort(gradeComparator);
 
-        for (Member member : members) {
-            System.out.println(member.getName() + " = " + member.getGrade());
-
+        System.out.println("Junior Members:");
+        for (Member juniorMember : junior) {
+            System.out.println(juniorMember.getName());
+        }
+        System.out.println("\nSenior Members:");
+        for (Member seniorMember : senior) {
+            System.out.println(seniorMember.getName());
         }
 
     }
+
 
     public void SwimTypeComparator() {
         SwimTypeComparator swimTypeComparator = new SwimTypeComparator();
@@ -247,7 +254,6 @@ public class Database {
             System.out.println(member.getName() + " = " + member.getTrainingTime());
         }
     }
-
 
     public void SearchSwimmer() {
         System.out.println("Write the name of the Swimmer");
@@ -339,6 +345,7 @@ public class Database {
         }
     }
 
+
     public void displayAllTrainingTimes() {
         for (Member member : members) {
             if (member instanceof CompetitorMember competitorMember) {
@@ -415,25 +422,29 @@ public class Database {
         for (Member member : members) {
             double fee = MembershipFee(member);
             totalFees += fee;
+            String membershipStatus = member.getIsActive() ? "active" : "inactive";
 
-            System.out.println("Member: " + member.getName() + ", Age categories: " + member.getGrade() + ", Age: " + member.getAge() + ", Member states : " + member.getIsActive() +
-                    ", Membership Fee: " + fee + " " + "kr.");
+            System.out.println("Name: " + member.getName() + ", Grade: " + member.getGrade() + ", Age: " + member.getAge() +
+                    ", Membership Status: " + membershipStatus + ", Membership Fee: " + fee + " kr.");
         }
 
-        System.out.println("\n Expected yearly turnover: " + totalFees);
+        System.out.println("\nExpected Yearly Turnover: " + totalFees + " kr.");
+
     }
 
     public void displayMemberDuesInformation(Member member) {
         double expectedDues = customizeExpectedDues(member, MembershipFee(member));
         double paidDues = customizePaidDues(member, getAmountPaid(member));
 
-        System.out.println("Member: " + member.getName() + ", Age: " + member.getAge() +
+        System.out.println("Name: " + member.getName() +
+                ", Age: " + member.getAge() +
                 ", Member states: " + (member.getIsActive() ? "Active" : "Inactive") +
                 ", Grade: " + member.getGrade() +
                 ", Expected Dues: " + expectedDues + " kr." +
                 ", Paid Dues: " + paidDues + " kr." +
                 ", Dues Status: " + calculateDuesStatus(paidDues, expectedDues));
     }
+
 
     public void updatePaidDuesForMember() {
         System.out.println("Enter the name of the member:");
@@ -472,18 +483,14 @@ public class Database {
     public void sortedOptionsForCoach() {
         int categorized = scanner.nextInt();
         scanner.nextLine();
-
-
         switch (categorized) {
             case 1 -> ActiveComparator();
             case 2 -> NameComparator();
             case 3 -> GradeComparator();
             case 4 -> SwimTypeComparator();
             case 5 -> SearchSwimmer();
-            case 6 -> trainingTimeComparator();
-            case 7 -> trainingTimeForEachSwimmer();
-            case 8 -> sortedOptionsForTopFiveJunior();//rette
-            case 9 -> sortedOptionsForTopFiveSenior();//rette
+            case 6 -> sortedOptionsForTopFiveJunior();
+            case 7 -> sortedOptionsForTopFiveSenior();
             default -> System.out.println("Unable to understand your command.");
         }
     }
@@ -511,8 +518,7 @@ public class Database {
         }
     }
     public void sortedOptionsForTopFiveSenior() {
-        int categorized = scanner.nextInt();
-        scanner.nextLine();
+
         System.out.println("""
                 LIST OF TOP FIVE SENIOR FOREACH SWIM DISCIPLINE
                                     
@@ -523,6 +529,8 @@ public class Database {
                               
                 """);
 
+        int categorized = scanner.nextInt();
+        scanner.nextLine();
         switch (categorized) {
             case 1 -> trainingTimeForTopFiveSeniorAndJunior("Butterfly");
             case 2 -> trainingTimeForTopFiveSeniorAndJunior("Crawl");
