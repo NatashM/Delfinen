@@ -138,7 +138,7 @@ public class Database {
 
                 } else {
 
-                    String swimType = "null";
+                    String swimType = "non active member";
                     String trainingTime = "00:00";
 
                     Member member = new Member(Name, Age, birthday, address, isActive, grade, swimType, trainingTime);
@@ -235,7 +235,7 @@ public class Database {
         members.sort(swimTypeComparator);
 
         for (Member member : members) {
-            System.out.println(member.getSwimType());
+            System.out.println(member.getName() + " = " + member.getSwimType());
         }
     }
 
@@ -302,7 +302,6 @@ public class Database {
         for (Member member : members) {
             if (member.getSwimType().equalsIgnoreCase(swimType) && member.getAge() < 18) {
                 swimTypeJunior.add(member);
-                System.out.println("Junior");
             } else if (member.getSwimType().equals(swimType) && member.getAge() > 18) {
                 swimTypeSenior.add(member);
 
